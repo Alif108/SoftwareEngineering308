@@ -1,0 +1,4 @@
+Currently the system takes any file and takes decision how to sum it (ASCII or int). Will it be this way? Or will the decision be taken before?
+
+
+***Be sure of the specs***
