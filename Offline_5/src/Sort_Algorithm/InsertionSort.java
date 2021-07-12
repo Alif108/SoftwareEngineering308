@@ -1,7 +1,5 @@
 package Sort_Algorithm;
 
-import java.util.*;
-
 public class InsertionSort 
 {
     int array[];

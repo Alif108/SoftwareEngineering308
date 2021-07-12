@@ -3,6 +3,7 @@ package Sort_Algorithm;
 import TestHelper.ScriptGenerator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.Test;
@@ -11,17 +12,34 @@ import static org.junit.Assert.*;
 
 public class InsertionSortTest {
  
-    ScriptGenerator sg = new ScriptGenerator();
+    private final ScriptGenerator sg = new ScriptGenerator();
     
-    public boolean compareElements(int x[], int y[])
+    private boolean compareElements(int x[], int y[])
     {
-        List<Integer> xList = IntStream.of(x).boxed().collect(Collectors.toCollection(ArrayList::new));     
-        List<Integer> yList = IntStream.of(y).boxed().collect(Collectors.toCollection(ArrayList::new));     
+//        List<Integer> xList = IntStream.of(x).boxed().collect(Collectors.toCollection(ArrayList::new));     
+//        List<Integer> yList = IntStream.of(y).boxed().collect(Collectors.toCollection(ArrayList::new));     
+//        
+//        return (xList.size() == yList.size() && xList.containsAll(yList) && yList.containsAll(xList));
+
+        if(x.length != y.length)                                    // if lengths don't match
+            return false;
+        else
+        {     
+            List<Integer> yList = IntStream.of(y).boxed().collect(Collectors.toCollection(ArrayList::new));
         
-        return (xList.size() == yList.size() && xList.containsAll(yList) && yList.containsAll(xList));
+            for(int i=0; i<x.length; i++)
+            {
+                for(int j=0; j<yList.size(); j++)
+                    if(Objects.equals(yList.get(j), x[i]))
+                        yList.remove(j);
+            }
+            if(!yList.isEmpty())
+                return false;
+        }
+        return true;
     }
     
-    public boolean isAscending(int x[])
+    private boolean isAscending(int x[])
     {
         for(int i=0; i<x.length-1; i++)
         {
@@ -31,7 +49,7 @@ public class InsertionSortTest {
         return true;
     }
     
-    public boolean isDescending(int x[])
+    private boolean isDescending(int x[])
     {
         for(int i=0; i<x.length-1; i++)
         {
@@ -87,26 +105,26 @@ public class InsertionSortTest {
         assertTrue(isDescending(result));
     }
     
-    @Test
-    public void randomSizedListTest()
-    {
-        int a[] = sg.generateRandomSizedList();
-        
-        InsertionSort instance = new InsertionSort(a);
-        
-        int result[] = instance.sort(true);
-        assertTrue(compareElements(a, result));
-        assertTrue(isAscending(result));
-        
-        result = instance.sort(false);
-        assertTrue(compareElements(a, result));
-        assertTrue(isDescending(result));
-    }
+//    @Test
+//    public void randomSizedListTest()
+//    {
+//        int a[] = sg.generateRandomSizedList();
+//        
+//        InsertionSort instance = new InsertionSort(a);
+//        
+//        int result[] = instance.sort(true);
+//        assertTrue(compareElements(a, result));
+//        assertTrue(isAscending(result));
+//        
+//        result = instance.sort(false);
+//        assertTrue(compareElements(a, result));
+//        assertTrue(isDescending(result));
+//    }
     
     @Test
-    public void randomValuedListTest()
+    public void randomListTest()
     {
-        int a[] = sg.generateRandomValuedList();
+        int a[] = sg.generateRandomList();
         
         InsertionSort instance = new InsertionSort(a);
         
@@ -155,6 +173,22 @@ public class InsertionSortTest {
     public void equalValuedListTest()
     {
         int a[] = sg.generateEqualValuedList();
+        
+        InsertionSort instance = new InsertionSort(a);
+        
+        int result[] = instance.sort(true);
+        assertTrue(compareElements(a, result));
+        assertTrue(isAscending(result));
+        
+        result = instance.sort(false);
+        assertTrue(compareElements(a, result));
+        assertTrue(isDescending(result));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void nullListTest()
+    {
+        int a[] = null;
         
         InsertionSort instance = new InsertionSort(a);
         
