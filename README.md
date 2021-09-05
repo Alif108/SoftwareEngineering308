@@ -1,4 +1,4 @@
-# SOFTWARE ENGINNERING 308
+# SOFTWARE ENGINEERING 308
 ### Software Engineering Course Offlines of BUET CSE L-3,T-1
 
 
